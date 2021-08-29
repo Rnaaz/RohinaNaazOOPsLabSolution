@@ -6,6 +6,14 @@ import com.greatLearning.administration.credentialService.Service;
 import com.greatLearning.administration.model.Employee;
 
 public class Driver {
+	public static boolean isString(String company) {
+		try {
+			Integer.parseInt(company);
+		} catch (NumberFormatException ex) {
+			return true;
+		}
+		return false;
+	}
 
 	public static void main(String[] args) {
 		Employee employee = new Employee("Rohina", "Naaz");
@@ -14,6 +22,7 @@ public class Driver {
 		int option;
 		String dept = "";
 		String company = "";
+
 		do {
 			System.out.println("Please Enter the department from the following");
 			System.out.println("..............................");
@@ -25,26 +34,33 @@ public class Driver {
 			option = sc.nextInt();
 			System.out.println("Enter the company name");
 			System.out.println("..............................");
-			
+
 			company = sc.next();
 
-			switch (option) {
-			case 1:
-				dept = "tech";
-				break;
-			case 2:
-				dept = "admin";
-				break;
-			case 3:
-				dept = "hr";
-				break;
-			case 4:
-				dept = "legal";
-				break;
-			default:
-				System.out.println("Invalid input");
+			if (Driver.isString(company)) {
+				System.out.println("You have entered a valid company name");
+				switch (option) {
+				case 1:
+					dept = "tech";
+					break;
+				case 2:
+					dept = "admin";
+					break;
+				case 3:
+					dept = "hr";
+					break;
+				case 4:
+					dept = "legal";
+					break;
+				default:
+					System.out.println("Invalid input");
+				}
+				service.showCredentials(employee, dept, company);
+			} else {
+				System.out.println("Company name is not valid. Please enter a valid name.");
+
 			}
-			service.showCredentials(employee, dept, company);
+
 		} while (option != 0);
 		sc.close();
 	}
